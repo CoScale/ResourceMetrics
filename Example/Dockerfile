@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y curl apt-transport-https patch && \
     ## Create an example WebApp
     dotnet new webapi -o WebApp1 && \
     cd WebApp1 && \
-    curl -L https://github.com/CoScale/ResourceMetrics/releases/download/0.1/ResourceMetrics.dll > ResourceMetrics.dll && \
     patch -p1 < /tmp/metrics.patch && \
 
     ## Build the WebApp
