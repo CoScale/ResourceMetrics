@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Cristian Ciutea</Authors>
+    <Company>CoScale</Company>
+    <Description>Extension for AppMetrics to expose .NET Core resource metrics</Description>
   </PropertyGroup>
 
   <ItemGroup>
