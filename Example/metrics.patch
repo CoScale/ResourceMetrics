@@ -1,36 +1,27 @@
 diff --git a/Program.cs b/Program.cs
-index caaa454..2b7a9f3 100644
+index caaa454..31ac955 100644
 --- a/Program.cs
 +++ b/Program.cs
-@@ -7,6 +7,10 @@ using Microsoft.AspNetCore;
+@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
  using Microsoft.AspNetCore.Hosting;
  using Microsoft.Extensions.Configuration;
  using Microsoft.Extensions.Logging;
-+using App.Metrics;
 +using App.Metrics.AspNetCore;
-+using App.Metrics.AspNetCore.Health;
-+
  
  namespace WebApp1
  {
-@@ -19,6 +23,15 @@ namespace WebApp1
+@@ -19,6 +20,9 @@ namespace WebApp1
  
          public static IWebHost BuildWebHost(string[] args) =>
              WebHost.CreateDefaultBuilder(args)
-+                .UseKestrel()
-+                .UseHealth()
-+                .UseMetricsEndpoints()
-+                .UseResourceMetrics()
-+                .UseContentRoot(Directory.GetCurrentDirectory())
-+                .UseIISIntegration()
-+                .UseApplicationInsights()
 +                .UseMetrics()
 +                .UseMetricsWebTracking()
++                .UseResourceMetrics()
                  .UseStartup<Startup>()
                  .Build();
      }
 diff --git a/Startup.cs b/Startup.cs
-index a9775dc..0f08eee 100644
+index a9775dc..a556a4e 100644
 --- a/Startup.cs
 +++ b/Startup.cs
 @@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
@@ -51,33 +42,16 @@ index a9775dc..0f08eee 100644
  
          // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 diff --git a/WebApp1.csproj b/WebApp1.csproj
-index 60ee45b..33ab7c8 100644
+index 60ee45b..5d35d42 100644
 --- a/WebApp1.csproj
 +++ b/WebApp1.csproj
-@@ -16,4 +16,25 @@
+@@ -16,4 +16,9 @@
      <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
    </ItemGroup>
  
--</Project>
-+<ItemGroup>
-+    <PackageReference Include="App.Metrics.AspNetCore.Abstractions" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Core" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Endpoints" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Health" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Health.Core" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Health.Endpoints" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Health.Hosting" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Hosting" Version="2.0.0-alpha" />
++  <ItemGroup>
 +    <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Reporting" Version="2.0.0-alpha" />
-+    <PackageReference Include="App.Metrics.AspNetCore.Routing" Version="2.0.0-alpha" />
 +    <PackageReference Include="App.Metrics.AspNetCore.Tracking" Version="2.0.0-alpha" />
-+</ItemGroup>
-+
-+<ItemGroup>
-+    <Reference Include="ResourceMetrics">
-+      <HintPath>.\ResourceMetrics.dll</HintPath>
-+    </Reference>
-+</ItemGroup>
-+
-+</Project>
++    <PackageReference Include="ResourceMetrics" Version="1.0.0" />
++  </ItemGroup>
+ </Project>
